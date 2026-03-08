@@ -1,51 +1,39 @@
 <template>
   <button
-    v-if="!customize.disableQRSupport"
-    id="secret-url-qrcode"
-    ref="qrButton"
-    class="btn btn-secondary"
-    :disabled="!qrDataURL"
-  >
-    <i class="fas fa-qrcode" />
-  </button>
+  id="secret-url-email"
+  ref="emailButton"
+  class="btn btn-secondary email-btn"
+  @click="sendEmail"
+>
+  <img src="/img/Outlook.png" class="outlook-icon">
+</button>
+
+<div class="toast-container position-fixed start-50 translate-middle-x p-3" style="top:10%;">
+  <div id="emailToast" class="toast align-items-center text-bg-success border-0 shadow-lg" role="alert">
+    <div class="d-flex">
+      <div class="toast-body">
+        El enlace fue enviado correctamente por correo.
+      </div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+    </div>
+  </div>
+</div>
+
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import { Popover } from 'bootstrap'
-import qrcode from 'qrcode'
+import { Toast } from 'bootstrap'
 
 export default defineComponent({
+
+  name: 'AppEmailButton',
+
   computed: {
     customize(): any {
       return window.OTSCustomize || {}
     },
   },
-
-  data() {
-    return {
-      qrDataURL: null,
-    }
-  },
-
-  methods: {
-    generateQR(): void {
-      if (window.OTSCustomize.disableQRSupport) {
-        return
-      }
-
-      qrcode.toDataURL(this.qrContent, { width: 200 })
-        .then(url => {
-          this.qrDataURL = url
-        })
-    },
-  },
-
-  mounted(): void {
-    this.generateQR()
-  },
-
-  name: 'AppQRButton',
 
   props: {
     qrContent: {
@@ -54,28 +42,16 @@ export default defineComponent({
     },
   },
 
-  watch: {
-    qrContent() {
-      this.generateQR()
-    },
+  methods: {
+    sendEmail() {
 
-    qrDataURL(to: string): void {
-      if (this.popover) {
-        this.popover.dispose()
-      }
+    const toastElement = document.getElementById('emailToast')
+    const toast = new Toast(toastElement)
 
-      this.popover = new Popover(this.$refs.qrButton, {
-        content: () => {
-          const img = document.createElement('img')
-          img.src = to
-          return img
-        },
+    toast.show()
+}
+}
+   
 
-        html: true,
-        placement: 'left',
-        trigger: 'focus',
-      })
-    },
-  },
 })
 </script>

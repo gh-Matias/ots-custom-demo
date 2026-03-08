@@ -31,23 +31,7 @@
       <div
         class="row mt-4"
       >
-        <div class="col form-text text-center">
-          <span
-            v-if="!customize.disablePoweredBy"
-            class="mx-2"
-          >
-            {{ $t('text-powered-by') }}
-            <a href="https://github.com/Luzifer/ots"><i class="fab fa-github" /> OTS</a>
-            {{ version }}
-          </span>
-          <span
-            v-for="link in customize.footerLinks"
-            :key="link.url"
-            class="mx-2"
-          >
-            <a :href="link.url">{{ link.name }}</a>
-          </span>
-        </div>
+        
       </div>
     </div>
   </div>

@@ -1,4 +1,7 @@
 <template>
+
+if (!this.usernameCheck)
+
   <!-- Creation disabled -->
   <div
     v-if="!showCreateForm"
@@ -38,6 +41,20 @@
             @paste-file="handlePasteFile"
           />
         </div>
+
+        <div class="col-12 mb-3">
+        <label for="usernameCheck">Usuario destinatario (Active Directory) </label>
+        <input
+        id="usernameCheck"
+        type="text"
+        v-model="usernameCheck"
+        class="form-control"
+        required
+        placeholder="Ej: usuario@bch.bancodechile.cl"
+        />
+        </div>
+        
+
         <div
           v-if="!customize.disableFileAttachment"
           class="col-12 mb-3"
@@ -130,16 +147,14 @@ import GrowArea from './growarea.vue'
 import OTSMeta from '../ots-meta'
 
 const defaultExpiryChoices = [
-  90 * 86400, // 90 days
-  30 * 86400, // 30 days
-  7 * 86400, // 7 days
-  3 * 86400, // 3 days
-  24 * 3600, // 1 day
-  12 * 3600, // 12 hours
-  4 * 3600, // 4 hours
-  60 * 60, // 1 hour
-  30 * 60, // 30 minutes
-  5 * 60, // 5 minutes
+  60,        // 1 minuto
+  5 * 60,    // 5 minutos
+  15 * 60,   // 15 minutos
+  60 * 60,   // 1 hora
+  4 * 3600,  // 4 horas
+  24 * 3600, // 1 día
+  3 * 86400, // 3 días
+  7 * 86400, // 7 días
 ]
 
 /*
@@ -245,6 +260,7 @@ export default defineComponent({
       createRunning: false,
       fileSize: 0,
       secret: '',
+      usernameCheck: '',
       securePassword: null,
       selectedExpiry: null,
       selectedFileMeta: [],
@@ -274,10 +290,24 @@ export default defineComponent({
     },
 
     // createSecret executes the secret creation after encrypting the secret
+
     createSecret(): void {
       if (!this.canCreate) {
         return
       }
+
+      if (!this.usernameCheck) {
+        alert('Debe ingresar un username AD obligatorio')
+        return
+      }
+
+      const regexCorreo = /^[a-zA-Z0-9._%+-]+@bch\.bancodechile\.cl$/
+
+      if (!regexCorreo.test(this.usernameCheck)) {
+        alert("Debe ingresar un correo corporativo válido (@bch.bancodechile.cl)")
+        return
+      }
+      
 
       // Encoding large files takes a while, prevent duplicate click on "create"
       this.createRunning = true
@@ -296,12 +326,16 @@ export default defineComponent({
       }
 
       meta.serialize()
-        .then(secret => appCrypto.enc(secret, this.securePassword))
+        .then(secret => {
+          const finalKey = this.securePassword + this.usernameCheck
+          return appCrypto.enc(secret, finalKey)
+        })
         .then(secret => {
           let reqURL = 'api/create'
           if (this.selectedExpiry !== null) {
             reqURL = `api/create?expire=${this.selectedExpiry}`
           }
+          
 
           return fetch(reqURL, {
             body: JSON.stringify({ secret }),

@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-bs-theme="light">
+<html lang="en" data-bs-theme="bch">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -21,6 +21,8 @@
       rel="stylesheet"
     >
 
+    <link href="custom.css" rel="stylesheet">
+
     <title>{{ .Customize.AppTitle }}</title>
 
     <script nonce="{{ .InlineContentNonce }}">
@@ -35,18 +37,17 @@
 
         return colorScheme
       }
-
-      window.refreshTheme = () => {
-        document.querySelector('html').setAttribute('data-bs-theme', window.getTheme())
-      }
+        window.refreshTheme = () => {
+          document.querySelector('html').setAttribute('data-bs-theme', 'bch')
+        }
 
       window.setTheme = (theme) => {
         localStorage.setItem('set-color-scheme', theme)
         window.refreshTheme()
       }
-
-      // Very early load of theme definition to avoid flickering
-      document.addEventListener('DOMContentLoaded', () => window.refreshTheme())
+        document.addEventListener('DOMContentLoaded', () => {
+          document.querySelector('html').setAttribute('data-bs-theme', 'bch')
+        })
 
       // Template variable from Golang process
       window.maxSecretExpire = {{ .MaxSecretExpiry }}
@@ -55,7 +56,19 @@
       window.useFormalLanguage = {{ .Customize.UseFormalLanguage | mustToJson }}
     </script>
   </head>
+
   <body>
+
+    <a href="/">
+    <img src="/img/letrasbch.png" alt="logo" class="avatar">
+    </a>
+    <br>
+
+<div class="security-indicator">
+  <img src="img/test2.png" alt="AES-256" class="security-icon">
+  Cifrado de extremo a extremo
+</div>
+
     <div id="app"></div>
 
     <script
@@ -63,5 +76,8 @@
       integrity="{{ assetSRI `app.js` }}"
       src="app.js"
     ></script>
+
   </body>
+
+
 </html>

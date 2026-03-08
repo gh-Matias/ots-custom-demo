@@ -7,11 +7,25 @@
     <div class="card-body">
       <template v-if="!secret && files.length === 0">
         <p v-html="$t('text-pre-reveal-hint')" />
-        <button
-          class="btn btn-success"
-          :disabled="secretLoading"
-          @click="requestSecret"
-        >
+
+         <div class="mb-3">
+            <label class="form-label">
+              Ingrese el username AD para desbloquear
+            </label>
+            <input
+              v-model="usernameInput"
+              type="text"
+              class="form-control"
+              placeholder="Username obligatorio"
+              />
+            </div>
+
+            <button
+              class="btn btn-success"
+              :disabled="secretLoading"
+              @click="requestSecret"
+            >
+
           <template v-if="!secretLoading">
             {{ $t('btn-reveal-secret') }}
           </template>
@@ -80,69 +94,102 @@ export default defineComponent({
       files: [],
       popover: null,
       secret: null,
+      usernameInput: '',
+      encryptedSecret: null,
       secretContentBlobURL: null,
       secretLoading: false,
     }
   },
 
   emits: ['error'],
+methods: {
 
-  methods: {
-    // requestSecret requests the encrypted secret from the backend
-    requestSecret(): void {
-      this.secretLoading = true
-      window.history.replaceState({}, '', window.location.href.split('#')[0])
-      fetch(`api/get/${this.secretId}`)
-        .then(resp => {
-          if (resp.status === 404) {
-            // Secret has already been consumed
-            this.$emit('error', this.$t('alert-secret-not-found'))
-            return
-          }
+  requestSecret(): void {
 
-          if (resp.status !== 200) {
-            // Some other non-200: Something(tm) was wrong
-            this.$emit('error', this.$t('alert-something-went-wrong'))
-            return
-          }
+    if (this.securePassword && !this.usernameInput) {
+      alert('Debe ingresar el username AD')
+      return
+    }
 
-          resp.json()
-            .then(data => {
-              const secret = data.secret
-              if (!this.securePassword) {
-                this.secret = secret
-                return
-              }
+    this.secretLoading = true
+    window.history.replaceState({}, '', window.location.href.split('#')[0])
 
-              appCrypto.dec(secret, this.securePassword)
-                .then(secret => {
-                  const meta = new OTSMeta(secret)
-                  this.secret = meta.secret
+    if (this.encryptedSecret) {
+      this.tryDecrypt(this.encryptedSecret)
+      return
+    }
 
-                  meta.files.forEach(file => {
-                    file.arrayBuffer()
-                      .then(ab => {
-                        const blobURL = window.URL.createObjectURL(new Blob([ab], { type: file.type }))
-                        this.files.push({
-                          id: window.crypto.randomUUID(),
-                          name: file.name,
-                          size: ab.byteLength,
-                          type: file.type,
-                          url: blobURL,
-                        })
-                      })
-                  })
-                  this.secretLoading = false
-                })
-                .catch(() => this.$emit('error', this.$t('alert-something-went-wrong')))
-            })
-        })
-        .catch(() => {
-          // Network error
+    fetch(`api/get/${this.secretId}`)
+      .then(resp => {
+
+        if (resp.status === 404) {
+          this.secretLoading = false
+          this.$emit('error', this.$t('alert-secret-not-found'))
+          return
+        }
+
+        if (resp.status !== 200) {
+          this.secretLoading = false
           this.$emit('error', this.$t('alert-something-went-wrong'))
-        })
-    },
+          return
+        }
+
+        return resp.json()
+      })
+      .then(data => {
+        if (!data) return
+
+        const secret = data.secret
+        this.encryptedSecret = secret
+
+        if (!this.securePassword) {
+          this.secret = secret
+          this.secretLoading = false
+          return
+        }
+
+        this.tryDecrypt(secret)
+      })
+      .catch(() => {
+        this.secretLoading = false
+        this.$emit('error', this.$t('alert-something-went-wrong'))
+      })
   },
+
+  tryDecrypt(secret: string): void {
+
+    const finalKey = this.securePassword + this.usernameInput
+
+    appCrypto.dec(secret, finalKey)
+      .then(secret => {
+        const meta = new OTSMeta(secret)
+        this.secret = meta.secret
+
+        meta.files.forEach(file => {
+          file.arrayBuffer().then(ab => {
+            const blobURL = window.URL.createObjectURL(
+              new Blob([ab], { type: file.type })
+            )
+
+            this.files.push({
+              id: window.crypto.randomUUID(),
+              name: file.name,
+              size: ab.byteLength,
+              type: file.type,
+              url: blobURL,
+            })
+          })
+        })
+
+        this.secretLoading = false
+      })
+      .catch(() => {
+        this.secretLoading = false
+        alert('Username AD incorrecto')
+      })
+  }
+
+},
 
   name: 'AppSecretDisplay',
   props: {

@@ -1,0 +1,155 @@
+body {
+    background-image: url('img/fondo.jpg');
+    background-size: cover;       /* hace que se adapte */
+    
+}
+
+
+.card {
+    background-color: rgba(255, 255, 255, 0.85) !important; /* blanco con transparencia */
+    border-radius: 12px !important;
+    border: none !important;
+    box-shadow:
+    0 20px 50px rgba(0, 0, 0, 0.45),
+    inset 0 0 25px rgba(255,255,255,0.05);
+
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow:
+    0 30px 70px rgba(0, 0, 0, 0.55),
+    inset 0 0 30px rgba(255,255,255,0.08);
+}
+
+.card-header {
+  background: transparent !important;
+  color: #ffffff !important;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  border-bottom: 1px solid rgba(255,255,255,0.15) !important;
+}
+
+
+
+/* Ocultar barra */
+.navbar {
+  display: none !important;
+}
+
+/* Todos los headers */
+.card-header {
+  background-color: rgba(255, 255, 255, 0.85) !important; /* blanco con transparencia */
+  color: #0029af !important;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+/* Botón  */
+.btn-success {
+  background: linear-gradient(135deg, #062e85, #0654c9) !important;
+  border: none !important;
+  font-weight: 600;
+  border-radius: 14px !important;
+  padding: 12px 20px !important;
+
+  box-shadow: 0 10px 25px rgba(0, 51, 160, 0.4);
+  transition: all 0.3s ease;
+}
+
+.btn-success:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 15px 35px rgba(0, 51, 160, 0.6);
+  
+  background-color: #001F5B !important;
+  border-color: #001F5B !important;
+}
+
+.form-control {
+  border-radius: 8px !important;
+  border: 1px solid #d6dbe6;
+  transition: all 0.2s ease;
+  textarea {
+  font-family: "Segoe UI", "Inter", "Roboto", sans-serif !important;
+  font-size: 14px;
+  line-height: 1.6;
+  letter-spacing: 0.2px;
+}
+}
+
+.form-control:focus {
+  border-color: #0038b1 !important;
+  box-shadow: 0 0 0 3px rgba(0, 51, 160, 0.15) !important;
+}
+
+.security-indicator {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  margin: 0 auto 25px auto;
+  width: fit-content;
+  padding: 10px 20px;
+  border-radius: 50px;
+  font-size: 14px;
+  font-weight: 500;
+
+  background: rgba(0, 170, 255, 0.12);
+  border: 1px solid rgba(0, 170, 255, 0.35);
+  color: #e9edee;
+
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 20px rgba(0, 170, 255, 0.25);
+   transition: 
+    transform 0.3s ease,
+    box-shadow 0.3s ease,
+    background 0.3s ease;
+}
+
+.security-indicator:hover {
+  transform: translateY(-3px) scale(1.04);
+  
+  background: rgba(0, 170, 255, 0.18);
+  
+  box-shadow: 
+    0 8px 25px rgba(0, 170, 255, 0.35),
+    0 0 20px rgba(0, 198, 255, 0.4);
+}
+.security-icon {
+  width: 22px;
+  height: 22px;
+}
+
+.avatar {
+  filter: brightness(0) invert(1);
+  width: 320px;
+  display: block;
+  margin: 70px auto 30px auto;
+  opacity: 0.95;
+  transition: transform 0.35s ease,
+              opacity 0.35s ease,
+              filter 0.35s ease;
+}
+
+.avatar:hover {
+  transform: scale(1.08);
+  opacity: 1;
+  filter: brightness(0) invert(1) drop-shadow(0 0 15px rgba(255, 255, 255, 0.486));
+}
+
+textarea.form-control {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif !important;
+  font-size: 15px !important;
+  line-height: 1.6 !important;
+  letter-spacing: 0.3px !important;
+  color: black;
+}
+
+
+/* Ocultar botón descarga */
+a[title="Download as File"]{
+  display:none !important;
+}
+

@@ -11,4 +11,29 @@ $web-font-path: '';
   .cursor-pointer {
     cursor: pointer;
   }
+
+  .email-btn {
+  width: 45px;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  background-color: rgb(255, 255, 255);
+  border: 2px solid white;
+}
+
+.outlook-icon {
+  width: 70%;
+  height: 70%;
+  object-fit: contain;
+  background-color: white;
+}
+
+.email-btn:hover {
+  filter: brightness(0.7);
+  transition: filter 0.2s ease;
+}
+
+
 }
