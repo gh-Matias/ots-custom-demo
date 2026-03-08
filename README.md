@@ -2,7 +2,11 @@
 ![](https://img.shields.io/github/v/release/Luzifer/ots)
 ![](https://img.shields.io/github/downloads/Luzifer/ots/total)
 
-# Luzifer / OTS
+# OTS Custom Demo
+Este repositorio es una versión modificada de **Onetime Secret (OTS)**.
+
+Proyecto original:
+https://github.com/luzifer/ots
 
 `ots` is a one-time-secret sharing platform. The secret is encrypted with a symmetric 256bit AES encryption in the browser before being sent to the server. Afterwards an URL containing the ID of the secret and the password is generated. The password is never sent to the server so the server will never be able to decrypt the secrets it delivers with a reasonable effort. Also the secret is immediately deleted on the first read.
 
