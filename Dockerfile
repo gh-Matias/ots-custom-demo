@@ -16,6 +16,7 @@ RUN set -ex \
       npm \
       tar \
       unzip \
+ && yarn install \
  && make frontend_prod generate-apidocs \
  && go install \
       -ldflags "-X main.version=$(git describe --tags --always || echo dev)" \
