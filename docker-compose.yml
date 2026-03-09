@@ -2,7 +2,7 @@ version: "3.8"
 services:
   app:
     build:
-      context: https://github.com/Luzifer/ots.git#v1.21.2
+      .
     restart: always
     environment:
       # Optional, see "Customization" in README
@@ -16,7 +16,8 @@ services:
     depends_on:
       - redis
     ports:
-      - 3000:3000
+      - "127.0.0.1:3000:3000"
+      #- 3000:3000
   redis:
     image: redis:alpine@sha256:2afba59292f25f5d1af200496db41bea2c6c816b059f57ae74703a50a03a27d0
     restart: always
