@@ -14,6 +14,7 @@ RUN set -ex \
       make \
       nodejs-current \
       npm \
+      yarn \
       tar \
       unzip \
  && yarn install \
