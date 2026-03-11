@@ -15,6 +15,7 @@
               v-model="usernameInput"
               type="text"
               class="form-control"
+              maxlength="50"
               placeholder="Username obligatorio"
               />
             </div>

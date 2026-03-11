@@ -256,7 +256,7 @@ translations:
       text-secret-create-disabled: La creación de nuevos secretos está desactivada en esta instancia.
       title-explanation: Así es como funciona&hellip;
       title-new-secret: Transferencia Segura de Información 
-      title-reading-secret: Obteniendo tu secreto&hellip;
+      title-reading-secret: Obteniendo tu secreto;
       title-secret-create-disabled: Creación de secretos desactivada...
       title-secret-created: ¡Secreto creado!
   fr:

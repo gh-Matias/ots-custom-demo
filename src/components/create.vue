@@ -1,31 +1,29 @@
 <template>
-
-if (!this.usernameCheck)
+if (!this.usernameCheck)   createSecretData"
 
   <!-- Creation disabled -->
   <div
     v-if="!showCreateForm"
     class="card border-info-subtle mb-3"
   >
-    <div
-      class="card-header bg-info-subtle"
-      v-html="$t('title-secret-create-disabled')"
-    />
-    <div
-      class="card-body"
-      v-html="$t('text-secret-create-disabled')"
-    />
-  </div>
+    <div class="card-header bg-info-subtle">
+      {{ $t('title-secret-create-disabled') }}
+    </div>
+
+    <div class="card-body">
+      {{ $t('text-secret-create-disabled') }}
+    </div>
+    </div>
 
   <!-- Creation possible -->
   <div
     v-else
     class="card border-primary-subtle mb-3"
   >
-    <div
-      class="card-header bg-primary-subtle"
-      v-html="$t('title-new-secret')"
-    />
+    <div class="card-header bg-primary-subtle">
+      {{ $t('title-new-secret') }}
+    </div>
+
     <div class="card-body">
       <form
         class="row"
@@ -38,6 +36,7 @@ if (!this.usernameCheck)
             v-model="secret"
             class="form-control"
             :rows="2"
+            maxlength="3000"
             @paste-file="handlePasteFile"
           />
         </div>
@@ -50,6 +49,7 @@ if (!this.usernameCheck)
         v-model="usernameCheck"
         class="form-control"
         required
+        maxlength="50"
         placeholder="Ej: usuario@bch.bancodechile.cl"
         />
         </div>
