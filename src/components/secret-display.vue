@@ -1,12 +1,11 @@
-<template>
+<template> 
   <div class="card border-primary-subtle mb-3">
-    <div
-      class="card-header bg-primary-subtle"
-      v-html="$t('title-reading-secret')"
-    />
+    <div class="card-header bg-primary-subtle">
+      {{ $t('title-reading-secret') }}
+    </div>
     <div class="card-body">
       <template v-if="!secret && files.length === 0">
-        <p v-html="$t('text-pre-reveal-hint')" />
+        <p>{{ $t('text-pre-reveal-hint') }}</p>
 
          <div class="mb-3">
             <label class="form-label">
@@ -68,10 +67,10 @@
           </div>
         </div>
         <template v-if="files.length > 0">
-          <p v-html="$t('text-attached-files')" />
+          <p>{{ $t('text-attached-files') }}</p>
           <FilesDisplay :files="files" />
         </template>
-        <p v-html="$t('text-hint-burned')" />
+        <p>{{ $t('text-hint-burned') }}</p>
       </template>
     </div>
   </div>
