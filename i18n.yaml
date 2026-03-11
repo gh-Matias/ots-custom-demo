@@ -247,16 +247,16 @@ translations:
       text-attached-files: El remitente ha adjuntado archivos al secreto. Asegúrate de que confías en esta persona, ya que los archivos no han sido revisados.
       text-burn-hint: Por favor, recuerda no acceder a este enlace tú mismo, ya que esto destruiría el secreto. ¡Solo tienes que pasárselo a otra persona!
       text-burn-time: 'Si no se muestra antes, este secreto se eliminará automáticamente:'
-      text-hint-burned: <strong>Atención:</strong> Solo verás esto una vez. En cuanto recargues la página, el secreto desaparecerá, así que cópialo ya&hellip;
+      text-hint-burned: Atención! Solo verás esto una vez. En cuanto recargues la página, el secreto desaparecerá, así que cópialo ya.
       text-max-filesize: 'Tamaño máximo: {maxSize}'
       text-max-filesize-exceeded: 'Los archivos seleccionados son demasiado grandes para adjuntarlos: {curSize} / {maxSize}'
       text-powered-by: Funciona con
       text-pre-reveal-hint: Este secreto se autodestruirá después de ser visto.
       text-pre-url: 'Tu secreto ha sido creado y almacenado en el siguiente enlace:'
       text-secret-create-disabled: La creación de nuevos secretos está desactivada en esta instancia.
-      title-explanation: Así es como funciona&hellip;
+      title-explanation: Así es como funciona.
       title-new-secret: Transferencia Segura de Información 
-      title-reading-secret: Obteniendo tu secreto;
+      title-reading-secret: Obteniendo tu secreto
       title-secret-create-disabled: Creación de secretos desactivada...
       title-secret-created: ¡Secreto creado!
   fr:
